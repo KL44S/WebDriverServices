@@ -18,7 +18,7 @@ namespace WebDriverServices
 
             try
             {
-                SeleniumUtils.GoToUrl(webDriver, TestPage);
+                WebDriverUtils.GoToUrl(webDriver, TestPage);
 
                 try
                 {

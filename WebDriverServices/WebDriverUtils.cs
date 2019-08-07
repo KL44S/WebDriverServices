@@ -5,7 +5,7 @@ using OpenQA.Selenium.Support.UI;
 
 namespace WebDriverServices
 {
-    internal class SeleniumUtils
+    public class WebDriverUtils
     {
         private readonly static int SecondsToWait = 10;
 
@@ -60,6 +60,14 @@ namespace WebDriverServices
                 alert.Accept();
             }
             catch (NoAlertPresentException) { }
+        }
+
+        public static void Dispose(IWebDriver webDriver)
+        {
+            if (webDriver != null)
+            {
+                webDriver.Dispose();
+            }
         }
     }
 }

@@ -5,6 +5,7 @@
     <Authors>KL44S</Authors>
     <Company>MT</Company>
     <Description>It provides services for handling web drivers using Selenium.</Description>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
