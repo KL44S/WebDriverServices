@@ -66,7 +66,7 @@ namespace WebDriverServices
         {
             if (webDriver != null)
             {
-                webDriver.Dispose();
+                webDriver.Quit();
             }
         }
     }

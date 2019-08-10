@@ -12,13 +12,15 @@ namespace WebDriverServices
              By.XPath("//body[@id='t']")
         };
 
-        public static bool TestConnection(IWebDriver webDriver)
+        public static bool TestConnection(IWebDriver webDriver, string url = null)
         {
             bool thereIsConnection = true;
 
             try
             {
-                WebDriverUtils.GoToUrl(webDriver, TestPage);
+                url = string.IsNullOrEmpty(url) ? TestPage : url;
+
+                WebDriverUtils.GoToUrl(webDriver, url);
 
                 try
                 {
