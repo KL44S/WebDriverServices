@@ -1,30 +1,25 @@
-﻿using System;
+﻿using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
-using OpenQA.Selenium;
+using WebDriverServices.Model;
 
 namespace WebDriverServices
 {
     public class WebDriverConnectionTester
     {
-        private readonly static string TestPage = @"http://www.google.com.ar/";
-        private readonly static IList<By> Criteria = new List<By>()
-        {
-             By.XPath("//body[@id='t']")
-        };
-
-        public static bool TestConnection(IWebDriver webDriver, string url = null)
+        public static bool TestConnection(IWebDriver webDriver, TestProxyConfig testProxyConfig = null)
         {
             bool thereIsConnection = true;
 
             try
             {
-                url = string.IsNullOrEmpty(url) ? TestPage : url;
+                TestProxyConfig validTestProxyConfig = GetValidTestProxyConfig(testProxyConfig);
 
-                WebDriverUtils.GoToUrl(webDriver, url);
+                WebDriverUtils.GoToUrl(webDriver, validTestProxyConfig.TestPageUrl);
 
                 try
                 {
-                    FindElement(webDriver);
+                    FindElement(webDriver, validTestProxyConfig.Criteria);
                 }
                 catch (NoSuchElementException)
                 {
@@ -46,7 +41,24 @@ namespace WebDriverServices
             return thereIsConnection;
         }
 
-        private static void FindElement(IWebDriver webDriver)
+        private static TestProxyConfig GetValidTestProxyConfig(TestProxyConfig testProxyConfig)
+        {
+            if (testProxyConfig == null)
+            {
+                testProxyConfig = new TestProxyConfig()
+                {
+                    TestPageUrl = @"http://www.google.com.ar/",
+                    Criteria = new List<By>()
+                    {
+                         By.XPath("//body[@id='t']")
+                    }
+                };
+            }
+
+            return testProxyConfig;
+        }
+
+        private static void FindElement(IWebDriver webDriver, IList<By> Criteria)
         {
             IWebElement goodConnectionElement = null;
 
