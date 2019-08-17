@@ -1,5 +1,6 @@
 ﻿using System;
 using OpenQA.Selenium;
+using WebDriverServices.Exceptions;
 using WebDriverServices.Factories;
 using WebDriverServices.Model;
 
@@ -36,10 +37,15 @@ namespace WebDriverServices
 
                     browserCreated = true;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     browserCreated = false;
                     attempsNumber++;
+
+                    if (ex is UnknownBrowserException || attempsNumber < MaxAttempsNumber)
+                    {
+                        throw ex;
+                    }
                 }
             }
 
